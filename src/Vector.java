@@ -48,7 +48,7 @@ public class Vector {
     /**
      * Get the magnitude of the vector
      */
-    public double getMagnitud(){
+    public double getMagnitude(){
         double magnitud = 0;
         for (int i = 0; i < size; i++) {
             magnitud += Math.pow(vector[i], 2);
@@ -175,7 +175,7 @@ public class Vector {
      * @return The angle between the two vectors
      */
     public double getAngle(Vector vector){
-        return Math.acos(this.dotProduct(vector) / (this.getMagnitud() * vector.getMagnitud()));
+        return Math.acos(this.dotProduct(vector) / (this.getMagnitude() * vector.getMagnitude()));
     }
 
     /**
@@ -183,7 +183,7 @@ public class Vector {
      * @return The unit vector
      */
     public Vector getUnitVector(){
-        double magnitud = this.getMagnitud();
+        double magnitud = this.getMagnitude();
         double[] unitVector = new double[size];
         for (int i = 0; i < size; i++) {
             unitVector[i] = vector[i] / magnitud;
@@ -195,10 +195,23 @@ public class Vector {
      * Normalize the vector
      */
     public void normalizeVector(){
-        double magnitud = this.getMagnitud();
+        double magnitud = this.getMagnitude();
         for (int i = 0; i < size; i++) {
             vector[i] /= magnitud;
         }
+    }
+
+    /**
+     * Compare two vectors
+     * @param vector The other vector
+     * @return True if the vectors are equal, false otherwise
+     */
+    public boolean equals(Vector vector){
+        if(this.size != vector.getSize()){
+            throw new SizeMismatch();
+        }
+        //The vectors are equal if the magnitude  squared is equal to the dot product
+        return Math.pow(getMagnitude(), 2) == dotProduct(vector);
     }
 
 
