@@ -1,5 +1,7 @@
 import exceptions.MatrixSizesIncompatible;
 
+import java.util.Arrays;
+
 /**
  * Clase que representa una matriz de números.
  * @author Jesús Antonio Murcia
@@ -41,6 +43,38 @@ public class Matrix {
 
     public double[][] getMatrix() {
         return matrix;
+    }
+
+    /**
+     * Get a row of the matrix
+     * @param row The row to get
+     * @return The row vector
+     */
+    public Vector getRow(int row){
+        if(row <= 0 || row > rows){
+            throw new IllegalArgumentException("The row is out of bounds");
+        }
+        return new Vector(matrix[row - 1]);
+    }
+
+
+    /**
+     * Get a column of the matrix
+     * @param column The column to get
+     * @return The column vector
+     */
+    public Vector getColumn(int column){
+        if(column <= 0 || column > columns){
+            throw new IllegalArgumentException("The column is out of bounds");
+        }
+        return getMatrixTranspose().getRow(column);//Transpose matrix and get the row
+    }
+
+    public double getValue(int row, int column){
+        if(row <= 0 || row > rows || column <= 0 || column > columns){
+            throw new IllegalArgumentException("The row or column is out of bounds");
+        }
+        return matrix[row - 1][column - 1];
     }
 
     /**
@@ -118,11 +152,11 @@ public class Matrix {
     }
 
     /**
-     * Create a new matrix with the substraction of two matrix's
-     * @param matrix the matrix to substract
-     * @return The result of the substraction
+     * Create a new matrix with the subtraction of two matrixs
+     * @param matrix the matrix to subtract
+     * @return The result of the subtraction
      */
-    public Matrix getSubstraction(Matrix matrix){
+    public Matrix getSubtraction(Matrix matrix){
         if(this.rows != matrix.rows || this.columns != matrix.columns){
             throw new MatrixSizesIncompatible();
         }
@@ -150,4 +184,21 @@ public class Matrix {
         return new Vector(result);
     }
 
+    public Matrix multiplyMatrix(Matrix matrix){
+        if(columns != matrix.rows){
+            throw new MatrixSizesIncompatible();
+        }
+        double[][] result = new double[rows][matrix.columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < matrix.columns ; j++) {
+                result[i][j] = getRow(i +1).dotProduct(matrix.getColumn(j +1));
+            }
+        }
+        return new Matrix(result);
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.deepToString(matrix);
+    }
 }
