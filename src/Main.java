@@ -1,9 +1,9 @@
 public class Main {
     public static void main(String[]argus){
         //Testing the matrix class
-        Matrix matrix = new Matrix(new double[][]{{1, 2, 3},{4, 5, 6},{7, 8, 9}});
+        SquareMatrix matrix = new SquareMatrix(new double[][]{{1, 4, 5,5},{5, 4, 5, 5},{5, 5, 3, 5},{5, 5, 5, 2}});
         System.out.println(matrix);
 
-        System.out.println(matrix.multiplyMatrix(matrix.getMatrixTranspose()));
+        System.out.println(matrix.getInverse());
     }
 }

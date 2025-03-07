@@ -174,14 +174,14 @@ public class Matrix {
      * @param scalar The scalar to multiply
      * @return The result of the multiplication
      */
-    public Vector getMultiplicationByScalar(double scalar){
-        double[] result = new double[rows * columns];
+    public Matrix getMultiplicationByScalar(double scalar){
+        double[][] result = new double[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                result[i * columns + j] = matrix[i][j] * scalar;
+                result[i][j] = matrix[i][j] * scalar;
             }
         }
-        return new Vector(result);
+        return new Matrix(result);
     }
 
     public Matrix multiplyMatrix(Matrix matrix){
